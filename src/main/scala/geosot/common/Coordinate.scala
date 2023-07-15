@@ -19,7 +19,7 @@ abstract class Coordinate extends Dimension{
     def direction = direction_
 
     // 接受 "1°32'0.06\" E" 格式的输入
-    def parseDMS(dms: String, regex_dms: Regex) = {
+    def parseFromString(dms: String, regex_dms: Regex) = {
         dms match {
             case regex_dms(degrees, minutes, seconds, _, direction) =>
                 degrees_ = degrees.toInt

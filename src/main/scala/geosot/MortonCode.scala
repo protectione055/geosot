@@ -38,4 +38,6 @@ object MortonCode {
         return res
     }
 
+    // TODO: 实现查找表法编码
+
 }
