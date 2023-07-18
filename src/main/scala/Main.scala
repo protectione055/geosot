@@ -1,14 +1,19 @@
 import scala.io._
 import os._
 import geny.Generator
+import geosot.MortonCode
 
 object Main {
   def main(args: Array[String]): Unit = {
     val proj_dir = os.pwd
     val input_files: Seq[os.Path] = os.list(proj_dir / "dataset").tail
-    for(file <- input_files) {
+    readTestDataFromFile(input_files)
+  }
+
+  private def readTestDataFromFile(input_files: Seq[os.Path]): Unit = {
+    for (file <- input_files) {
       val lines: Seq[String] = os.read.lines(file)
-      for(line <- lines) {
+      for (line <- lines) {
         var cells: Seq[String] = line.split(", ")
         val lat: String = cells(0)
         val lon: String = cells(1)
@@ -17,4 +22,5 @@ object Main {
       }
     }
   }
+
 }
