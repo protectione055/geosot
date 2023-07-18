@@ -2,18 +2,28 @@ package geosot.common
 
 import scala.util.matching.Regex
 
-class Longitude(dms: String) extends Coordinate {
-    val regex_dms_ : Regex = """(\d+)°(\d+)'(\d+(\.\d+)?)"\s([EW])""".r
+class Longitude extends Coordinate {
+    private val _regex_dms : Regex = """(\d+)°(\d+)'(\d+(\.\d+)?)"\s([EW])""".r
+}
 
-    super.parseFromString(dms, regex_dms_)
-
-    //转换为指定精度的二进制编码
-    override def getValue(precision: Int = 32): Int = {
-        var res: Int = concatDegMinSec()
-        if (direction == "W") {
+object Longitude {
+    def apply(dms: String) = {
+        val lon = new Longitude
+        lon.parseFromString(dms, lon._regex_dms)
+        lon.parseFromString(dms, lon._regex_dms)
+        var res: Int = lon.concatDegMinSec()
+        if (lon.direction == "W") {
             res = res | (1 << 31)
         }
-        val shift = 32 - precision
-        (res >>> shift) << shift
+        lon.value_ = res
+        lon
+    }
+
+    def apply(value: Int) = {
+        val obj = new Longitude
+        obj.direction_ = if (value>>>31 == 1) "W" else "E"
+        obj.splitDegMinSec(value)
+        obj.value_ = value
+        obj
     }
 }

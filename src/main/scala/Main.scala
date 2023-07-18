@@ -7,12 +7,7 @@ object Main {
   def main(args: Array[String]): Unit = {
     val proj_dir = os.pwd
     val input_files: Seq[os.Path] = os.list(proj_dir / "dataset").tail
-//    readTestDataFromFile(input_files)
-
-    val morton_coder = MortonCode
-    val coordinate: Array[Int] = Array[Int](-1, -1, -1)
-    val obtained = morton_coder.enCode(coordinate)
-    val expected = Array[Byte](-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1)
+    readTestDataFromFile(input_files)
   }
 
   private def readTestDataFromFile(input_files: Seq[os.Path]): Unit = {
